@@ -1,0 +1,83 @@
+<div class="rounded-xl border-2 border-gray-100 bg-white">
+  <form
+    id="entry-edit"
+    class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
+    #form="ngForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
+      @if (editMode) { Edit } @else { Add New } Entry
+    </h1>
+    <p class="mx-auto mt-4 max-w-md text-center text-gray-500"></p>
+    <div>
+      <label class="sr-only" for="name">Title:</label>
+      <div class="relative">
+        <input
+          type="text"
+          id="title"
+          size="120"
+          max="120"
+          placeholder="Enter Title"
+          class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+          required
+          ngModel
+          name="title"
+          #title="ngModel"
+          [ngModel]="entry?.title"
+        />
+        @if (title.invalid && title.touched ) {
+
+        <span class="text-red-700 text-xs font-bold"
+          >The title field is required</span
+        >
+        }
+      </div>
+    </div>
+
+    <div>
+      <label class="sr-only" for="body">Body:</label>
+      <div class="relative">
+        <textarea
+          type="text"
+          id="body"
+          placeholder="Enter Body"
+          class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+          required
+          name="body"
+          #body="ngModel"
+          [ngModel]="entry?.body"
+        ></textarea>
+      </div>
+      @if (body.invalid && body.touched) {
+
+      <span class="text-red-700 text-xs font-bold"
+        >Enter a valid Body text</span
+      >
+      }
+    </div>
+
+    @if ((title.invalid && title.touched) || (body.invalid && body.touched)) {
+
+    <span class="text-red-700 text-xs font-bold"
+      >The Title and Body fields are required.</span
+    >
+    }
+
+    <div class="flex gap-8">
+      <button
+        class="rounded border disabled:bg-gray-500 border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Save
+      </button>
+      <button
+        class="rounded border border-red-600 bg-red-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+        type="button"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
